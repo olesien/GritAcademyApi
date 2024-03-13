@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity(name = "students")
 @Table(name = "students")
 @NoArgsConstructor
@@ -42,5 +45,11 @@ public class Students {
     @Column(name = "username")
     private String username;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "attendance",
+            joinColumns = @JoinColumn(name="student_id"),
+            inverseJoinColumns =  @JoinColumn(name="course_id")
+    )
+    private Set<Courses> courses = new HashSet<>();
 
 }

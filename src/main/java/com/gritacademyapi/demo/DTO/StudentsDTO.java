@@ -3,6 +3,8 @@ package com.gritacademyapi.demo.DTO;
 import jakarta.persistence.Column;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class StudentsDTO {
     private Long id;
@@ -10,7 +12,5 @@ public class StudentsDTO {
     private String hobby;
     private String fname;
     private String lname;
-    private String email;
-    private Integer phone;
-    private String username;
+    List<CoursesDTO> courses;
 }

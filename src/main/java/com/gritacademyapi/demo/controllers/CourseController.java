@@ -1,5 +1,7 @@
 package com.gritacademyapi.demo.controllers;
 
+import com.gritacademyapi.demo.DTO.CoursesDTO;
+import com.gritacademyapi.demo.DTO.StudentsDTO;
 import com.gritacademyapi.demo.entities.Courses;
 import com.gritacademyapi.demo.entities.Students;
 import com.gritacademyapi.demo.services.CourseService;
@@ -32,6 +34,19 @@ public class CourseController {
 
         if (course.isPresent()) {
             return new ResponseEntity<>(course.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+    }
+    //Get a course with all its students
+    @GetMapping(value = "/courses/{id}/students", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CoursesDTO> courseWithStudents(@PathVariable Long id) {
+        System.out.println("Getting course with students");
+        CoursesDTO course = courseService.getCourseAndStudentsById(id);
+
+        if (course != null) {
+            return new ResponseEntity<>(course, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }

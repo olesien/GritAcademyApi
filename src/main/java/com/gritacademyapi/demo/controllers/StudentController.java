@@ -1,5 +1,6 @@
 package com.gritacademyapi.demo.controllers;
 
+import com.gritacademyapi.demo.DTO.StudentsDTO;
 import com.gritacademyapi.demo.entities.Students;
 import com.gritacademyapi.demo.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,20 @@ public class StudentController {
 
         if (student.isPresent()) {
             return new ResponseEntity<>(student.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    //Get a student with all their courses
+    @GetMapping(value = "/students/{id}/courses", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StudentsDTO> studentWithCourses(@PathVariable Long id) {
+        System.out.println("Getting student");
+        StudentsDTO student = studentService.getStudentAndCoursesById(id);
+
+        if (student != null) {
+            return new ResponseEntity<>(student, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
