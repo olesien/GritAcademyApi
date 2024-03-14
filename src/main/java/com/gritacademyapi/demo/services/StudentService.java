@@ -1,6 +1,7 @@
 package com.gritacademyapi.demo.services;
 
 import com.gritacademyapi.demo.DTO.CoursesDTO;
+import com.gritacademyapi.demo.DTO.NewStudentDTO;
 import com.gritacademyapi.demo.DTO.StudentsDTO;
 import com.gritacademyapi.demo.entities.Attendance;
 import com.gritacademyapi.demo.entities.Courses;
@@ -43,6 +44,19 @@ public class StudentService {
         } else {
             return null;
         }
+    }
+
+    public StudentsDTO addStudent(NewStudentDTO newStudent) {
+        Students student = new Students();
+        student.setFname(newStudent.getFname());
+        student.setLname(newStudent.getLname());
+        student.setTown(newStudent.getTown());
+        student.setHobby(newStudent.getHobby());
+        student.setEmail(newStudent.getEmail());
+        student.setUsername(newStudent.getFname());
+        student.setPhone("000");
+        Students addedStudent = studentRepository.save(student);
+        return mapToDTO(addedStudent);
     }
 
     private CoursesDTO mapToDTO(Attendance course) {
