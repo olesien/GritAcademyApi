@@ -1,5 +1,6 @@
 package com.gritacademyapi.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -45,11 +46,7 @@ public class Students {
     @Column(name = "username")
     private String username;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "attendance",
-            joinColumns = @JoinColumn(name="student_id"),
-            inverseJoinColumns =  @JoinColumn(name="course_id")
-    )
-    private Set<Courses> courses = new HashSet<>();
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private Set<Attendance> courses = new HashSet<>();
 
 }

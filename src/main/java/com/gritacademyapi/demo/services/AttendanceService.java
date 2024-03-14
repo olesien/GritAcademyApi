@@ -1,5 +1,6 @@
 package com.gritacademyapi.demo.services;
 
+import com.gritacademyapi.demo.DTO.AttendanceDTO;
 import com.gritacademyapi.demo.DTO.CoursesDTO;
 import com.gritacademyapi.demo.DTO.StudentsDTO;
 import com.gritacademyapi.demo.entities.Attendance;
@@ -21,12 +22,21 @@ public class AttendanceService {
     @Autowired
     AttendanceRepository attendanceRepository;
 
-    public List<Attendance> getAll() {
-        List<Attendance> attendances = new ArrayList<>();
-        attendanceRepository.findAll().iterator().forEachRemaining(attendances::add);
+    public List<AttendanceDTO> getAll() {
+        List<AttendanceDTO> attendances = new ArrayList<>();
+        attendanceRepository.findAll().iterator().forEachRemaining(attendant -> attendances.add(mapToDTO(attendant)));
        return attendances;
     }
 
+    private CoursesDTO mapToDTO(Courses course) {
+        CoursesDTO dto = new CoursesDTO();
+        dto.setId(course.getId());
+        dto.setName(course.getName());
+        dto.setDescription(course.getDescription());
+        dto.setYhp(course.getYhp());
+
+        return dto;
+    }
 
     private StudentsDTO mapToDTO(Students student) {
         StudentsDTO dto = new StudentsDTO();
@@ -38,15 +48,12 @@ public class AttendanceService {
 
         return dto;
     }
-    private CoursesDTO mapToDTO(Courses course) {
-        CoursesDTO dto = new CoursesDTO();
-        dto.setId(course.getId());
-        dto.setName(course.getName());
-        dto.setDescription(course.getDescription());
-        dto.setYhp(course.getYhp());
-        dto.setStudents(course.getStudents().stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList()));
+
+    private AttendanceDTO mapToDTO(Attendance attendance) {
+        AttendanceDTO dto = new AttendanceDTO();
+        dto.setId(attendance.getId());
+        dto.setCourse(mapToDTO(attendance.getCourse()));
+        dto.setStudent(mapToDTO(attendance.getStudent()));
         return dto;
     }
 }

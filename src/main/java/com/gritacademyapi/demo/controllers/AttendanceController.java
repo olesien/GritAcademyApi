@@ -1,5 +1,6 @@
 package com.gritacademyapi.demo.controllers;
 
+import com.gritacademyapi.demo.DTO.AttendanceDTO;
 import com.gritacademyapi.demo.entities.Attendance;
 import com.gritacademyapi.demo.entities.Students;
 import com.gritacademyapi.demo.services.AttendanceService;
@@ -18,7 +19,7 @@ public class AttendanceController {
     @Autowired
     private AttendanceService attendanceService;
     @GetMapping(value = "/attendance", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Attendance>> all() {
+    public ResponseEntity<List<AttendanceDTO>> all() {
         System.out.println("Getting attendance");
         return new ResponseEntity<>(attendanceService.getAll(), HttpStatus.OK);
     }

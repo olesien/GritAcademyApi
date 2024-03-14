@@ -19,18 +19,18 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
     @GetMapping(value = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Students>> students() {
+    public ResponseEntity<List<StudentsDTO>> students() {
         System.out.println("Getting students");
         return new ResponseEntity<>(studentService.getAllStudents(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/students/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Students> student(@PathVariable Long id) {
+    public ResponseEntity<StudentsDTO> student(@PathVariable Long id) {
         System.out.println("Getting student");
-        Optional<Students> student = studentService.getStudentById(id);
+        StudentsDTO student = studentService.getStudentById(id);
 
-        if (student.isPresent()) {
-            return new ResponseEntity<>(student.get(), HttpStatus.OK);
+        if (student != null) {
+            return new ResponseEntity<>(student, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }

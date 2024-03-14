@@ -2,6 +2,7 @@ package com.gritacademyapi.demo.services;
 
 import com.gritacademyapi.demo.DTO.CoursesDTO;
 import com.gritacademyapi.demo.DTO.StudentsDTO;
+import com.gritacademyapi.demo.entities.Attendance;
 import com.gritacademyapi.demo.entities.Courses;
 import com.gritacademyapi.demo.entities.Students;
 import com.gritacademyapi.demo.repositories.CourseRepository;
@@ -19,14 +20,19 @@ public class CourseService {
     @Autowired
     CourseRepository courseRepository;
 
-    public List<Courses> getAllCourses() {
-        List<Courses> courses = new ArrayList<>();
-        courseRepository.findAll().iterator().forEachRemaining(courses::add);
+    public List<CoursesDTO> getAllCourses() {
+        List<CoursesDTO> courses = new ArrayList<>();
+        courseRepository.findAll().iterator().forEachRemaining(course -> courses.add(mapToDTOBasic(course)));
        return courses;
     }
 
-    public Optional<Courses> getCourseById(Long id) {
-        return courseRepository.findById(id);
+    public CoursesDTO getCourseById(Long id) {
+        Optional<Courses> course = courseRepository.findById(id);
+        if (course.isPresent()) {
+            return mapToDTOBasic(course.get());
+        } else {
+            return null;
+        }
     }
 
     public CoursesDTO getCourseAndStudentsById(Long id) {
@@ -38,13 +44,13 @@ public class CourseService {
         }
     }
 
-    private StudentsDTO mapToDTO(Students student) {
+    private StudentsDTO mapToDTO(Attendance student) {
         StudentsDTO dto = new StudentsDTO();
         dto.setId(student.getId());
-        dto.setTown(student.getTown());
-        dto.setHobby(student.getHobby());
-        dto.setFname(student.getFname());
-        dto.setLname(student.getLname());
+        dto.setTown(student.getStudent().getTown());
+        dto.setHobby(student.getStudent().getHobby());
+        dto.setFname(student.getStudent().getFname());
+        dto.setLname(student.getStudent().getLname());
 
         return dto;
     }
@@ -57,6 +63,15 @@ public class CourseService {
         dto.setStudents(course.getStudents().stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList()));
+        return dto;
+    }
+
+    private CoursesDTO mapToDTOBasic(Courses course) {
+        CoursesDTO dto = new CoursesDTO();
+        dto.setId(course.getId());
+        dto.setName(course.getName());
+        dto.setDescription(course.getDescription());
+        dto.setYhp(course.getYhp());
         return dto;
     }
 }

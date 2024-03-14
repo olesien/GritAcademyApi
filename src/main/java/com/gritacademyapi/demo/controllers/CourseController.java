@@ -22,18 +22,18 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
     @GetMapping(value = "/courses", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Courses>> courses() {
+    public ResponseEntity<List<CoursesDTO>> courses() {
         System.out.println("Getting courses");
         return new ResponseEntity<>(courseService.getAllCourses(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/courses/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Courses> course(@PathVariable Long id) {
+    public ResponseEntity<CoursesDTO> course(@PathVariable Long id) {
         System.out.println("Getting course");
-        Optional<Courses> course = courseService.getCourseById(id);
+        CoursesDTO course = courseService.getCourseById(id);
 
-        if (course.isPresent()) {
-            return new ResponseEntity<>(course.get(), HttpStatus.OK);
+        if (course != null) {
+            return new ResponseEntity<>(course, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
