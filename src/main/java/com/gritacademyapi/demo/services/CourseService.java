@@ -46,6 +46,33 @@ public class CourseService {
         }
     }
 
+    public CoursesDTO getCourseAndStudentsByName(String name) {
+        Optional<Courses> course = courseRepository.findByName(name);
+        if (course.isPresent()) {
+            return mapToDTO(course.get());
+        } else {
+            return null;
+        }
+    }
+
+    public CoursesDTO getCourseAndStudentsMatchingName(String name) {
+        Optional<Courses> course = courseRepository.findByNameContainingIgnoreCase(name);
+        if (course.isPresent()) {
+            return mapToDTO(course.get());
+        } else {
+            return null;
+        }
+    }
+
+    public CoursesDTO getCourseAndStudentsMatchingDescription(String description) {
+        Optional<Courses> course = courseRepository.findByDescriptionContainingIgnoreCase(description);
+        if (course.isPresent()) {
+            return mapToDTO(course.get());
+        } else {
+            return null;
+        }
+    }
+
     public CoursesDTO addCourse(NewCourseDTO newCourse) {
         Courses course = new Courses();
         course.setName(newCourse.getName());

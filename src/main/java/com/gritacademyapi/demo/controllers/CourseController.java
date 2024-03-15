@@ -53,6 +53,43 @@ public class CourseController {
 
     }
 
+    //Get a course with all its students by name
+    @GetMapping(value = "/course_by_name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CoursesDTO> courseWithStudentsByName(@PathVariable String name) {
+        System.out.println("Getting course with students by name");
+        CoursesDTO course = courseService.getCourseAndStudentsByName(name);
+
+        if (course != null) {
+            return new ResponseEntity<>(course, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/course_matching_name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CoursesDTO> courseWithStudentsMatchingName(@PathVariable String name) {
+        System.out.println("Getting course with students matching name");
+        CoursesDTO course = courseService.getCourseAndStudentsMatchingName(name);
+
+        if (course != null) {
+            return new ResponseEntity<>(course, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/course_matching_description/{description}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CoursesDTO> courseWithStudentsMatchingDescription(@PathVariable String description) {
+        System.out.println("Getting course with students matching description");
+        CoursesDTO course = courseService.getCourseAndStudentsMatchingDescription(description);
+
+        if (course != null) {
+            return new ResponseEntity<>(course, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping(value = "/courses", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CoursesDTO> createStudent(@RequestBody NewCourseDTO newCourse) {
         System.out.println("Adding course");
