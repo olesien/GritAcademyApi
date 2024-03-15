@@ -33,6 +33,18 @@ public class StudentService {
         return students;
     }
 
+    public List<StudentsDTO> getAllStudentsByLName(String lname) {
+        List<StudentsDTO> students = new ArrayList<>();
+        studentRepository.findAllByLname(lname).iterator().forEachRemaining(student -> students.add(mapToDTO(student)));
+        return students;
+    }
+
+    public List<StudentsDTO> getAllStudentsByTown(String town) {
+        List<StudentsDTO> students = new ArrayList<>();
+        studentRepository.findAllByTown(town).iterator().forEachRemaining(student -> students.add(mapToDTO(student)));
+        return students;
+    }
+
     public StudentsDTO getStudentById(Long id) {
         Optional<Students> student = studentRepository.findById(id);
         if (student.isPresent()) {

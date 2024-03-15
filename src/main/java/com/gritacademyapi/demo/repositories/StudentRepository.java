@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends CrudRepository<Students, Long> {
     List<Students> findAllByFname(String fName);
+    List<Students> findAllByLname(String lName);
+    List<Students> findAllByTown(String town);
 }
