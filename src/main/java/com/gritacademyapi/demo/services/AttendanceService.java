@@ -1,13 +1,12 @@
 package com.gritacademyapi.demo.services;
 
-import com.gritacademyapi.demo.DTO.AttendanceDTO;
-import com.gritacademyapi.demo.DTO.CoursesDTO;
-import com.gritacademyapi.demo.DTO.StudentsDTO;
+import com.gritacademyapi.demo.DTO.*;
 import com.gritacademyapi.demo.entities.Attendance;
 import com.gritacademyapi.demo.entities.Courses;
 import com.gritacademyapi.demo.entities.Students;
 import com.gritacademyapi.demo.repositories.AttendanceRepository;
 import com.gritacademyapi.demo.repositories.CourseRepository;
+import com.gritacademyapi.demo.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +20,12 @@ public class AttendanceService {
 
     @Autowired
     AttendanceRepository attendanceRepository;
+
+    @Autowired
+    CourseRepository courseRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     public List<AttendanceDTO> getAll() {
         List<AttendanceDTO> attendances = new ArrayList<>();
@@ -36,6 +41,20 @@ public class AttendanceService {
         dto.setYhp(course.getYhp());
 
         return dto;
+    }
+
+    public AttendanceDTO addAttendance(NewAttendanceDTO newAttendance) {
+        Attendance attendance = new Attendance();
+        Optional<Students> student = studentRepository.findById(newAttendance.getStudent_id());
+        Optional<Courses> course = courseRepository.findById(newAttendance.getCourse_id());
+
+        if (student.isPresent() && course.isPresent()) {
+            attendance.setCourse(course.get());
+            attendance.setStudent(student.get());
+            Attendance addedAttendance = attendanceRepository.save(attendance);
+            return mapToDTO(addedAttendance);
+        }
+        return null;
     }
 
     private StudentsDTO mapToDTO(Students student) {

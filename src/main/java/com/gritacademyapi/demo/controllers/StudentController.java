@@ -60,4 +60,17 @@ public class StudentController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping(value = "/students/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> removeStudent(@PathVariable Long id) {
+        System.out.println("Getting student");
+        boolean deleted = studentService.removeStudent(id);
+
+        if (deleted) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }
