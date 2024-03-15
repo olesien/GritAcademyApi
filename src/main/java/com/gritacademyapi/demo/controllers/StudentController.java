@@ -18,8 +18,14 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
     @GetMapping(value = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<StudentsDTO>> students() {
+    public ResponseEntity<List<StudentsDTO>> students(@RequestParam Optional<String> fname) {
         System.out.println("Getting students");
+        //Check through the optional query parameters. If any are present we want to use these to query.
+        if (fname.isPresent()) {
+            //We want to search by fname
+            System.out.println(fname.get());
+            return new ResponseEntity<>(studentService.getAllStudentsByFName(fname.get()), HttpStatus.OK);
+        }
         return new ResponseEntity<>(studentService.getAllStudents(), HttpStatus.OK);
     }
 

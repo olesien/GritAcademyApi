@@ -27,6 +27,12 @@ public class StudentService {
        return students;
     }
 
+    public List<StudentsDTO> getAllStudentsByFName(String fname) {
+        List<StudentsDTO> students = new ArrayList<>();
+        studentRepository.findAllByFname(fname).iterator().forEachRemaining(student -> students.add(mapToDTO(student)));
+        return students;
+    }
+
     public StudentsDTO getStudentById(Long id) {
         Optional<Students> student = studentRepository.findById(id);
         if (student.isPresent()) {
