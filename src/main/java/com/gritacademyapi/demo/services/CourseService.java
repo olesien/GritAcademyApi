@@ -55,6 +55,16 @@ public class CourseService {
         return mapToDTO(addedCourse);
     }
 
+    public boolean removeCourse(Long id) {
+        Optional<Courses> course = courseRepository.findById(id);
+        if (course.isPresent()) {
+            courseRepository.delete(course.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private StudentsDTO mapToDTO(Attendance student) {
         StudentsDTO dto = new StudentsDTO();
         dto.setId(student.getId());

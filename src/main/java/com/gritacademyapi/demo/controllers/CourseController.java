@@ -64,4 +64,15 @@ public class CourseController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+    @DeleteMapping(value = "/courses/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> removeCourse(@PathVariable Long id) {
+        System.out.println("Deleting course");
+        boolean deleted = courseService.removeCourse(id);
+
+        if (deleted) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

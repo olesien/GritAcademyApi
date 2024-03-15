@@ -57,6 +57,16 @@ public class AttendanceService {
         return null;
     }
 
+    public boolean removeAttendance(Long id) {
+        Optional<Attendance> attendance = attendanceRepository.findById(id);
+        if (attendance.isPresent()) {
+            attendanceRepository.delete(attendance.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private StudentsDTO mapToDTO(Students student) {
         StudentsDTO dto = new StudentsDTO();
         dto.setId(student.getId());

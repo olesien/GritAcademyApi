@@ -67,7 +67,6 @@ public class StudentService {
         } else {
             return false;
         }
-
     }
 
     private CoursesDTO mapToDTO(Attendance course) {

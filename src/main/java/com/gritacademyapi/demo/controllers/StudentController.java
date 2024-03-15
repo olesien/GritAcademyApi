@@ -63,7 +63,7 @@ public class StudentController {
 
     @DeleteMapping(value = "/students/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> removeStudent(@PathVariable Long id) {
-        System.out.println("Getting student");
+        System.out.println("Deleting student");
         boolean deleted = studentService.removeStudent(id);
 
         if (deleted) {
@@ -71,6 +71,5 @@ public class StudentController {
         } else {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
-
     }
 }
