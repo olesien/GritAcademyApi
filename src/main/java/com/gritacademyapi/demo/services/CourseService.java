@@ -56,7 +56,7 @@ public class CourseService {
     }
 
     public CoursesDTO getCourseAndStudentsMatchingName(String name) {
-        Optional<Courses> course = courseRepository.findByNameContainingIgnoreCase(name);
+        Optional<Courses> course = courseRepository.findTopByNameContainingIgnoreCase(name);
         if (course.isPresent()) {
             return mapToDTO(course.get());
         } else {
@@ -65,7 +65,7 @@ public class CourseService {
     }
 
     public CoursesDTO getCourseAndStudentsMatchingDescription(String description) {
-        Optional<Courses> course = courseRepository.findByDescriptionContainingIgnoreCase(description);
+        Optional<Courses> course = courseRepository.findTopByDescriptionContainingIgnoreCase(description);
         if (course.isPresent()) {
             return mapToDTO(course.get());
         } else {

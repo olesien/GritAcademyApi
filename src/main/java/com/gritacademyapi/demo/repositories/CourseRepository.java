@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface CourseRepository extends CrudRepository<Courses, Long> {
     Optional<Courses> findByName(String name);
 
-    Optional<Courses> findByNameContainingIgnoreCase(String name);
+    Optional<Courses> findTopByNameContainingIgnoreCase(String name);
 
-    Optional<Courses> findByDescriptionContainingIgnoreCase(String description);
+    Optional<Courses> findTopByDescriptionContainingIgnoreCase(String description);
 }
